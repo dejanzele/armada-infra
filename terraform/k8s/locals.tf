@@ -13,6 +13,11 @@ locals {
     }
   }
   k8s = {
+    auth = {
+      accounts = var.aws_auth_accounts
+      users    = var.aws_auth_users
+      roles    = var.aws_auth_roles
+    }
     cluster_name = var.cluster_name
     api_version  = var.k8s_version
   }

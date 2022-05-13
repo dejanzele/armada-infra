@@ -29,8 +29,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     bottlerocket = {
-      name            = local.k8s.cluster_name
-      use_name_prefix = true
+      name            = "${local.k8s.cluster_name}-worker"
 
       create_launch_template = false
       launch_template_name   = ""
@@ -45,31 +44,19 @@ module "eks" {
 
       instance_types = ["t4g.large"]
       capacity_type  = "SPOT"
+
+      tags = {
+        Name = "${local.k8s.cluster_name}-worker"
+      }
     }
   }
 
   # aws-auth configmap
   manage_aws_auth_configmap = true
 
-  aws_auth_users = [
-    {
-      userarn  = "arn:aws:iam::235758441054:user/dejan.pejcev"
-      username = "dejan.pejcev"
-      groups   = ["system:masters"]
-    },
-  ]
-
-  aws_auth_roles = [
-    {
-      rolearn  = "arn:aws:iam::235758441054:role/DevArmadaEKSAccess"
-      username = "DevArmadaEKSAccess"
-      groups   = ["system:masters"]
-    }
-  ]
-
-  aws_auth_accounts = [
-    "235758441054",
-  ]
+  aws_auth_users = local.k8s.auth.users
+  aws_auth_roles = local.k8s.auth.roles
+  aws_auth_accounts = local.k8s.auth.accounts
 
   tags = {
     Cluster     = local.k8s.cluster_name
