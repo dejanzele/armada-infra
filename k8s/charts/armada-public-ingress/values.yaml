@@ -1,6 +1,0 @@
-alb:
-  environment: dev
-  instance: armada
-  domains: server.dev.armadaproject.io
-  certificate:
-    arn: arn:aws:acm:us-east-1:235758441054:certificate/e04fe233-1497-44f0-a500-c13667930b9b
