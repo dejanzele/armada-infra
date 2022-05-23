@@ -43,3 +43,9 @@ variable "aws_auth_accounts" {
   description = "List of AWS accounts to grant access to the cluster"
   default     = []
 }
+
+variable "r53_zone" {
+  type        = string
+  description = "Armada hosted zone"
+  default     = "dev.armadaproject.io"
+}

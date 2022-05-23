@@ -4,6 +4,9 @@ locals {
     region  = var.aws_region
     profile = var.aws_profile
   }
+  dns = {
+    zone = var.r53_zone
+  }
   vpc = {
     name = "${upper(var.environment)}_VPC"
     subnets = {

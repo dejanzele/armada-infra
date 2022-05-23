@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-{{ required "environment (.Values.environment) must be configured!" .Values.environment }}
+spec:
+  acme:
+    email: {{ required "issuer email (.Values.email) must be configured!" .Values.email }}
+    privateKeySecretRef:
+      name: {{ .Values.privateKeySecretRef }}
+    server: {{ required "issuer server (.Values.server) must be configured!" .Values.server }}
+    solvers:
+      - dns01:
+          route53:
+            region: {{ required "AWS R53 region (.Values.route53.region) must be configured!" .Values.route53.region }}
+            hostedZoneID: {{ required "AWS R53 Hosted Zone ID (.Values.route53.hostedZoneID) must be configured!" .Values.route53.hostedZoneID }}

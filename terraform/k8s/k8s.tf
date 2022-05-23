@@ -34,7 +34,7 @@ module "eks" {
       create_launch_template = false
       launch_template_name   = ""
 
-      ami_type = "BOTTLEROCKET_ARM_64"
+      ami_type = "BOTTLEROCKET_x86_64"
       platform = "bottlerocket"
 
       subnet_ids = data.aws_subnets.private.ids
@@ -42,7 +42,7 @@ module "eks" {
       max_size     = 5
       desired_size = 4
 
-      instance_types = ["t4g.large"]
+      instance_types = ["t3.large"]
       capacity_type  = "SPOT"
 
       tags = {

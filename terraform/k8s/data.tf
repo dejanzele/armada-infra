@@ -25,3 +25,7 @@ data "aws_subnets" "private" {
     Name = local.vpc.subnets.private_name
   }
 }
+
+data "aws_route53_zone" "this" {
+  name = local.dns.zone
+}
