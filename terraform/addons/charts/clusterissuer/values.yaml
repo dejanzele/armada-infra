@@ -1,0 +1,7 @@
+email: !!!CHANGE ME!!!
+environment: dev
+privateKeySecretRef: letsencrypt
+server: https://acme-v02.api.letsencrypt.org/directory
+route53:
+  region: us-east-1
+  hostedZoneID: !!!CHANGE ME!!!
