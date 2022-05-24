@@ -1,5 +1,5 @@
 email: !!!CHANGE ME!!!
-environment: dev
+clusterIssuer: letsencrypt-dev
 privateKeySecretRef: letsencrypt
 server: https://acme-v02.api.letsencrypt.org/directory
 route53:
