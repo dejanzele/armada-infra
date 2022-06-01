@@ -29,3 +29,23 @@ data "aws_subnets" "private" {
 data "aws_route53_zone" "this" {
   name = local.dns.zone
 }
+
+data "aws_ami" "flatcar_pro_latest" {
+  most_recent = true
+  owners      = ["aws-marketplace"]
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["Flatcar-pro-${var.flatcar_channel}-*"]
+  }
+}

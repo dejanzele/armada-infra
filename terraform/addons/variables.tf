@@ -29,3 +29,15 @@ variable "cert_manager_cluster_issuer_email" {
   type        = string
   description = "Email which will receive notifications about certificaes"
 }
+
+variable "install_gpu_operator" {
+  type        = bool
+  description = "Toggle whether to install NVIDIA GPU Operator"
+  default     = false
+}
+
+variable "install_prometheus" {
+  type        = bool
+  description = "Toggle whether to install Prometheus Operator"
+  default     = true
+}

@@ -1,7 +1,6 @@
 module "nginx-controller" {
-  source           = "terraform-iaac/nginx-controller/helm"
-  namespace        = "ingress-system"
-  create_namespace = true
+  source    = "terraform-iaac/nginx-controller/helm"
+  namespace = "kube-system"
 
   additional_set = [
     {

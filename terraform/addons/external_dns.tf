@@ -37,7 +37,7 @@ resource "helm_release" "external-dns" {
 }
 
 resource "aws_iam_role" "external_dns" {
-  name  = "external-dns-${local.environment}-armada"
+  name = "external-dns-${local.environment}-armada"
 
   assume_role_policy = <<EOF
 {

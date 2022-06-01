@@ -18,9 +18,9 @@ resource "helm_release" "cert_manager" {
 }
 
 resource "helm_release" "cert_manager_cluster_issuer" {
-  name             = "cert-manager-cluster-issuer"
-  chart            = "${path.module}/charts/clusterissuer"
-  namespace        = local.k8s.cert_manager.namespace
+  name      = "cert-manager-cluster-issuer"
+  chart     = "${path.module}/charts/clusterissuer"
+  namespace = local.k8s.cert_manager.namespace
 
   set {
     name  = "email"

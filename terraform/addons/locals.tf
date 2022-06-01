@@ -8,6 +8,12 @@ locals {
     }
   }
   k8s = {
+    gpu_operator = {
+      install = var.install_gpu_operator
+    }
+    prometheus = {
+      install = var.install_prometheus
+    }
     external_dns = {
       service_account = "external-dns"
       namespace       = "kube-system"
@@ -19,7 +25,7 @@ locals {
       email     = var.cert_manager_cluster_issuer_email
       namespace = "cert-manager"
     }
-    type     = "eks"
-    cluster  = var.k8s_cluster
+    type    = "eks"
+    cluster = var.k8s_cluster
   }
 }

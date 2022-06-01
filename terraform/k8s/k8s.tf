@@ -9,14 +9,13 @@ module "eks" {
   cluster_endpoint_public_access  = true
 
   cluster_addons = {
-    coredns = {
-      resolve_conflicts = "OVERWRITE"
-    }
     kube-proxy = {}
     vpc-cni = {
       resolve_conflicts = "OVERWRITE"
     }
   }
+
+  iam_role_additional_policies = local.k8s.additional_iam_policies
 
   vpc_id     = data.aws_vpc.vpc.id
   subnet_ids = data.aws_subnets.public.ids
@@ -24,38 +23,16 @@ module "eks" {
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
     disk_size      = 50
-    instance_types = ["t4g.large"]
-  }
-
-  eks_managed_node_groups = {
-    bottlerocket = {
-      name            = "${local.k8s.cluster_name}-worker"
-
-      create_launch_template = false
-      launch_template_name   = ""
-
-      ami_type = "BOTTLEROCKET_x86_64"
-      platform = "bottlerocket"
-
-      subnet_ids = data.aws_subnets.private.ids
-      min_size     = 3
-      max_size     = 5
-      desired_size = 4
-
-      instance_types = ["t3.large"]
-      capacity_type  = "SPOT"
-
-      tags = {
-        Name = "${local.k8s.cluster_name}-worker"
-      }
-    }
+    instance_types = ["t3.large"]
+    iam_role_additional_policies = local.k8s.additional_iam_policies
   }
 
   # aws-auth configmap
   manage_aws_auth_configmap = true
+  create_aws_auth_configmap = true
 
-  aws_auth_users = local.k8s.auth.users
-  aws_auth_roles = local.k8s.auth.roles
+  aws_auth_users    = local.k8s.auth.users
+  aws_auth_roles    = local.k8s.auth.roles
   aws_auth_accounts = local.k8s.auth.accounts
 
   tags = {
