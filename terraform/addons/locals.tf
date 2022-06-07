@@ -8,9 +8,6 @@ locals {
     }
   }
   k8s = {
-    gpu_operator = {
-      install = var.install_gpu_operator
-    }
     prometheus = {
       install = var.install_prometheus
     }
@@ -22,6 +19,7 @@ locals {
       namespace = "kube-system"
     }
     cert_manager = {
+      install   = var.install_cert_manager
       email     = var.cert_manager_cluster_issuer_email
       namespace = "cert-manager"
     }

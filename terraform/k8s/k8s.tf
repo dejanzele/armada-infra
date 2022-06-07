@@ -22,8 +22,8 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-    disk_size      = 50
-    instance_types = ["t3.large"]
+    disk_size                    = 50
+    instance_types               = ["t3.large"]
     iam_role_additional_policies = local.k8s.additional_iam_policies
   }
 

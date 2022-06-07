@@ -7,7 +7,7 @@ resource "null_resource" "remove_aws_vpc_cni" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      kubectl delete daemonset --context='${local.k8s.cluster_name}' --namespace kube-system aws-node
+      kubectl delete daemonset --context='${module.eks.cluster_arn}' --namespace kube-system aws-node
     EOT
 
     interpreter = ["bash", "-c"]
@@ -28,7 +28,7 @@ resource "null_resource" "install_calico_cni" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      kubectl --context='${local.k8s.cluster_name}' \
+      kubectl --context='${module.eks.cluster_arn}' \
         apply -f https://docs.projectcalico.org/archive/v3.17/manifests/calico-vxlan.yaml
     EOT
 

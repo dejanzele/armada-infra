@@ -16,9 +16,9 @@ module "worker_managed_node_group" {
 
   iam_role_additional_policies = local.k8s.additional_iam_policies
 
-  create_launch_template  = false
-#  launch_template_name    = aws_launch_template.flatcar_pro_lt.name
-#  launch_template_version = aws_launch_template.flatcar_pro_lt.default_version
+  create_launch_template = false
+  #  launch_template_name    = aws_launch_template.flatcar_pro_lt.name
+  #  launch_template_version = aws_launch_template.flatcar_pro_lt.default_version
 
   ami_id = data.aws_ami.flatcar_pro_latest.image_id
 
@@ -28,10 +28,10 @@ module "worker_managed_node_group" {
 
   instance_types = local.k8s.worker_nodes.instance_types
 
-  taints         = local.k8s.worker_nodes.taints
+  taints = local.k8s.worker_nodes.taints
 
   tags = {
-    Name = "${local.k8s.cluster_name}-worker"
+    Name      = "${local.k8s.cluster_name}-worker"
     CalicoCNI = local.k8s.calico.install ? null_resource.install_calico_cni[0].id : false
   }
 }

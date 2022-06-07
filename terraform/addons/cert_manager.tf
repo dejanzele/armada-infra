@@ -1,4 +1,6 @@
 resource "helm_release" "cert_manager" {
+  count = local.k8s.cert_manager.install ? 1 : 0
+
   name             = "cert-manager"
   repository       = "https://charts.jetstack.io"
   chart            = "cert-manager"

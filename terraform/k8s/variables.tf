@@ -156,3 +156,9 @@ variable "install_calico_cni" {
   description = "Toggle whether to install Calico CNI"
   default     = true
 }
+
+variable "install_nvidia_device_plugin" {
+  type        = bool
+  description = "Toggle whether to install NVIDIA Device Plugin"
+  default     = false
+}

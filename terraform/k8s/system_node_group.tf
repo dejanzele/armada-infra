@@ -3,9 +3,9 @@ module "system_managed_node_group" {
 
   count = local.k8s.system_nodes.create ? 1 : 0
 
-  name            = "${local.k8s.cluster_name}-system"
-  cluster_name    = module.eks.cluster_id
-  cluster_version = module.eks.cluster_version
+  name         = "${local.k8s.cluster_name}-system"
+  cluster_name = module.eks.cluster_id
+  platform     = "linux"
 
   vpc_id                            = data.aws_vpc.vpc.id
   subnet_ids                        = data.aws_subnets.private.ids
@@ -15,10 +15,26 @@ module "system_managed_node_group" {
   ]
 
   iam_role_additional_policies = local.k8s.additional_iam_policies
+  create_launch_template       = false
+  #  launch_template_name    = ""
+  launch_template_name    = aws_launch_template.launch_template.name
+  launch_template_version = aws_launch_template.launch_template.default_version
 
-  create_launch_template  = false
+  #  ami_id = "ami-09fff39455eafe6ab"
 
-  ami_id = data.aws_ami.flatcar_pro_latest.image_id
+  #  enable_bootstrap_user_data = true
+  #  bootstrap_extra_args = local.k8s.system_nodes.bootstrap_extra_args
+  #  pre_bootstrap_user_data = <<-EOT
+  #      #!/bin/bash
+  #      set -ex
+  #      cat <<-EOF > /etc/profile.d/bootstrap.sh
+  #      export CONTAINER_RUNTIME="containerd"
+  #      export USE_MAX_PODS=false
+  #      export KUBELET_EXTRA_ARGS="--max-pods=110"
+  #      EOF
+  #      # Source extra environment variables in bootstrap script
+  #      sed -i '/^set -o errexit/a\\nsource /etc/profile.d/bootstrap.sh' /etc/eks/bootstrap.sh
+  #  EOT
 
   min_size     = local.k8s.system_nodes.min_size
   max_size     = local.k8s.system_nodes.max_size
@@ -26,7 +42,7 @@ module "system_managed_node_group" {
 
   instance_types = local.k8s.system_nodes.instance_types
 
-  taints         = local.k8s.system_nodes.taints
+  taints = local.k8s.system_nodes.taints
 
   tags = {
     Name      = "${local.k8s.cluster_name}-worker"

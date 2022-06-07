@@ -15,7 +15,14 @@ locals {
       database_name = "${upper(var.environment)}_DATABASE_SUBNET"
     }
   }
+  lt = {
+    name = "${var.cluster_name}-lt"
+  }
+
   k8s = {
+    nvidia_device_plugin = {
+      install = var.install_nvidia_device_plugin
+    }
     calico = {
       install = var.install_calico_cni
     }
@@ -25,7 +32,7 @@ locals {
       "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
     ]
-    ami      = var.eks_node_ami
+    ami      = "ami-09fff39455eafe6ab"
     key_pair = var.node_key_pair
     system_nodes = {
       create               = var.create_system_nodes
