@@ -32,12 +32,11 @@ locals {
       "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
     ]
-    ami      = "ami-09fff39455eafe6ab"
+    ami      = var.eks_node_ami
     key_pair = var.node_key_pair
     system_nodes = {
       create               = var.create_system_nodes
       taints               = var.system_node_taints
-      bootstrap_extra_args = var.system_bootstrap_extra_args
       instance_types       = var.system_nodes_instance_types
       min_size             = var.system_nodes_min_size
       max_size             = var.system_nodes_max_size
@@ -46,7 +45,6 @@ locals {
     worker_nodes = {
       create               = var.create_worker_nodes
       taints               = var.worker_node_taints
-      bootstrap_extra_args = var.worker_bootstrap_extra_args
       instance_types       = var.worker_nodes_instance_types
       min_size             = var.worker_nodes_min_size
       max_size             = var.worker_nodes_max_size

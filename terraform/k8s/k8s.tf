@@ -28,8 +28,8 @@ module "eks" {
   }
 
   # aws-auth configmap
-  manage_aws_auth_configmap = true
-  create_aws_auth_configmap = true
+  manage_aws_auth_configmap = false
+  create_aws_auth_configmap = false
 
   aws_auth_users    = local.k8s.auth.users
   aws_auth_roles    = local.k8s.auth.roles

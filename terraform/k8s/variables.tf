@@ -31,6 +31,12 @@ variable "k8s_version" {
   default     = "1.21"
 }
 
+variable "aws_additional_role" {
+  type        = string
+  description = "Additional IAM role to add in aws-auth configmap"
+  default     = ""
+}
+
 variable "aws_auth_users" {
   type        = list(object({ userarn = string, username = string, groups = list(string) }))
   description = "List of IAM users to grant access to the cluster"
@@ -67,12 +73,6 @@ variable "system_node_taints" {
   default     = []
 }
 
-variable "system_bootstrap_extra_args" {
-  type        = string
-  description = "Bootstrap extra arguments"
-  default     = ""
-}
-
 variable "system_nodes_instance_types" {
   type        = list(string)
   description = "Managed node group instance type"
@@ -107,12 +107,6 @@ variable "worker_node_taints" {
   type        = list(object({ key = string, value = string, effect = string }))
   description = "Node taints"
   default     = []
-}
-
-variable "worker_bootstrap_extra_args" {
-  type        = string
-  description = "Bootstrap extra arguments"
-  default     = ""
 }
 
 variable "worker_nodes_instance_types" {
