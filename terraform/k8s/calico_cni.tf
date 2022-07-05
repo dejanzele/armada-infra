@@ -28,8 +28,19 @@ resource "null_resource" "install_calico_cni" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      kubectl --context='${module.eks.cluster_arn}' \
-        apply -f https://docs.projectcalico.org/archive/v3.17/manifests/calico-vxlan.yaml
+      kubectl --context='${module.eks.cluster_arn}' create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
+      kubectl create -f - <<EOF
+kind: Installation
+apiVersion: operator.tigera.io/v1
+metadata:
+  name: default
+spec:
+  kubernetesProvider: EKS
+  cni:
+    type: Calico
+  calicoNetwork:
+    bgp: Disabled
+EOF
     EOT
 
     interpreter = ["bash", "-c"]

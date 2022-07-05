@@ -43,6 +43,7 @@ module "system_managed_node_group" {
   instance_types = local.k8s.system_nodes.instance_types
 
   taints = local.k8s.system_nodes.taints
+  labels = local.k8s.system_nodes.labels
 
   tags = {
     Name      = "${local.k8s.cluster_name}-worker"

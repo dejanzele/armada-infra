@@ -35,20 +35,22 @@ locals {
     ami      = var.eks_node_ami
     key_pair = var.node_key_pair
     system_nodes = {
-      create               = var.create_system_nodes
-      taints               = var.system_node_taints
-      instance_types       = var.system_nodes_instance_types
-      min_size             = var.system_nodes_min_size
-      max_size             = var.system_nodes_max_size
-      desired_size         = var.system_nodes_desired_size
+      create         = var.create_system_nodes
+      taints         = var.system_node_taints
+      labels         = var.system_node_labels
+      instance_types = var.system_nodes_instance_types
+      min_size       = var.system_nodes_min_size
+      max_size       = var.system_nodes_max_size
+      desired_size   = var.system_nodes_desired_size
     }
     worker_nodes = {
-      create               = var.create_worker_nodes
-      taints               = var.worker_node_taints
-      instance_types       = var.worker_nodes_instance_types
-      min_size             = var.worker_nodes_min_size
-      max_size             = var.worker_nodes_max_size
-      desired_size         = var.worker_nodes_desired_size
+      create         = var.create_worker_nodes
+      taints         = var.worker_node_taints
+      labels         = var.worker_node_labels
+      instance_types = var.worker_nodes_instance_types
+      min_size       = var.worker_nodes_min_size
+      max_size       = var.worker_nodes_max_size
+      desired_size   = var.worker_nodes_desired_size
     }
     auth = {
       accounts = var.aws_auth_accounts

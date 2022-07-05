@@ -3,9 +3,9 @@ module "worker_managed_node_group" {
 
   count = local.k8s.worker_nodes.create ? 1 : 0
 
-  name            = "${local.k8s.cluster_name}-system"
-  cluster_name    = module.eks.cluster_id
-  cluster_version = module.eks.cluster_version
+  name         = "${local.k8s.cluster_name}-worker"
+  cluster_name = module.eks.cluster_id
+  platform     = "linux"
 
   vpc_id                            = data.aws_vpc.vpc.id
   subnet_ids                        = data.aws_subnets.private.ids
@@ -15,12 +15,10 @@ module "worker_managed_node_group" {
   ]
 
   iam_role_additional_policies = local.k8s.additional_iam_policies
-
-  create_launch_template = false
-  #  launch_template_name    = aws_launch_template.flatcar_pro_lt.name
-  #  launch_template_version = aws_launch_template.flatcar_pro_lt.default_version
-
-  ami_id = data.aws_ami.flatcar_pro_latest.image_id
+  create_launch_template       = false
+  #  launch_template_name    = ""
+  launch_template_name    = aws_launch_template.launch_template.name
+  launch_template_version = aws_launch_template.launch_template.default_version
 
   min_size     = local.k8s.worker_nodes.min_size
   max_size     = local.k8s.worker_nodes.max_size
@@ -29,6 +27,7 @@ module "worker_managed_node_group" {
   instance_types = local.k8s.worker_nodes.instance_types
 
   taints = local.k8s.worker_nodes.taints
+  labels = local.k8s.worker_nodes.labels
 
   tags = {
     Name      = "${local.k8s.cluster_name}-worker"

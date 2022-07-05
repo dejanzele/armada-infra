@@ -69,8 +69,14 @@ variable "create_system_nodes" {
 
 variable "system_node_taints" {
   type        = list(object({ key = string, value = string, effect = string }))
-  description = "Node taints"
+  description = "System node taints"
   default     = []
+}
+
+variable "system_node_labels" {
+  type        = map(string)
+  description = "System node labels"
+  default     = {}
 }
 
 variable "system_nodes_instance_types" {
@@ -107,6 +113,12 @@ variable "worker_node_taints" {
   type        = list(object({ key = string, value = string, effect = string }))
   description = "Node taints"
   default     = []
+}
+
+variable "worker_node_labels" {
+  type        = map(string)
+  description = "Node labels"
+  default     = {}
 }
 
 variable "worker_nodes_instance_types" {

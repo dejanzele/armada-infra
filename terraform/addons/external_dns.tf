@@ -3,7 +3,7 @@ resource "helm_release" "external-dns" {
   namespace  = local.k8s.external_dns.namespace
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "6.4.4"
+  version    = "6.5.6"
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
@@ -22,12 +22,17 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "annotationFilter"
-    value = "kubernetes\\.io/ingress\\.class=alb"
+    value = "kubernetes\\.io/ingress\\.class=nginx"
   }
 
   set {
     name  = "domainFilters[0]"
     value = local.aws.r53.domain
+  }
+
+  set {
+    name  = "provider"
+    value = "aws"
   }
 
   set {
