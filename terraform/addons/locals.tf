@@ -11,6 +11,9 @@ locals {
     prometheus = {
       install = var.install_prometheus
     }
+    metrics_server = {
+      install = var.install_metrics_server
+    }
     external_dns = {
       service_account = "external-dns"
       namespace       = "kube-system"

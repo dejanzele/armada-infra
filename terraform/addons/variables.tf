@@ -27,7 +27,7 @@ variable "armada_domain" {
 
 variable "cert_manager_cluster_issuer_email" {
   type        = string
-  description = "Email which will receive notifications about certificaes"
+  description = "Email which will receive notifications about certificates"
 }
 
 variable "install_prometheus" {
@@ -36,6 +36,11 @@ variable "install_prometheus" {
   default     = true
 }
 
+variable "install_metrics_server" {
+  type        = bool
+  description = "Toggle whether to install Metrics Server Helm chart"
+  default     = true
+}
 
 variable "install_cert_manager" {
   type        = bool
