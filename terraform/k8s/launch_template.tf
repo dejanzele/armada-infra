@@ -1,6 +1,6 @@
 resource "aws_launch_template" "launch_template" {
   name_prefix            = "${local.lt.name}-"
-  description            = "EKS managed node group external launch template for Flatcar Pro AMI"
+  description            = "EKS managed node group external launch template"
   update_default_version = true
   key_name               = local.k8s.key_pair
 

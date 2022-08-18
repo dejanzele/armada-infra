@@ -14,7 +14,7 @@ module "worker_managed_node_group" {
     module.eks.cluster_security_group_id,
   ]
 
-  iam_role_additional_policies = local.k8s.additional_iam_policies
+  iam_role_additional_policies = local.k8s.defaults.additional_iam_policies
   create_launch_template       = false
   #  launch_template_name    = ""
   launch_template_name    = aws_launch_template.launch_template.name

@@ -10,12 +10,9 @@ module "eks" {
 
   cluster_addons = {
     kube-proxy = {}
-    vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
-    }
   }
 
-  iam_role_additional_policies = local.k8s.additional_iam_policies
+  iam_role_additional_policies = local.k8s.defaults.additional_iam_policies
 
   vpc_id     = data.aws_vpc.vpc.id
   subnet_ids = data.aws_subnets.public.ids
@@ -23,8 +20,8 @@ module "eks" {
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
     disk_size                    = 50
-    instance_types               = ["t3.large"]
-    iam_role_additional_policies = local.k8s.additional_iam_policies
+    instance_types               = local.k8s.defaults.instance_types
+    iam_role_additional_policies = local.k8s.defaults.additional_iam_policies
   }
 
   # aws-auth configmap

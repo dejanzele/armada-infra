@@ -94,7 +94,7 @@ variable "system_nodes_max_size" {
 variable "system_nodes_min_size" {
   type        = number
   description = "System Node Group min size"
-  default     = 3
+  default     = 2
 }
 
 variable "system_nodes_desired_size" {
@@ -136,7 +136,7 @@ variable "worker_nodes_max_size" {
 variable "worker_nodes_min_size" {
   type        = number
   description = "Worker Node Group min size"
-  default     = 3
+  default     = 2
 }
 
 variable "worker_nodes_desired_size" {

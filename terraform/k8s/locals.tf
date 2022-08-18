@@ -20,18 +20,21 @@ locals {
   }
 
   k8s = {
+    defaults = {
+      instance_types = ["t3.medium"]
+      additional_iam_policies = [
+        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+        "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+      ]
+    }
     nvidia_device_plugin = {
       install = var.install_nvidia_device_plugin
     }
     calico = {
       install = var.install_calico_cni
     }
-    additional_iam_policies = [
-      "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
-      "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
-      "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
-      "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
-    ]
     ami      = var.eks_node_ami
     key_pair = var.node_key_pair
     system_nodes = {
