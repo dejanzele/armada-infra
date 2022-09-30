@@ -52,3 +52,24 @@ EOF
     module.eks
   ]
 }
+
+resource "null_resource" "validate_aws_cni_deleted" {
+  count = local.k8s.calico.install ? 1 : 0
+
+  triggers = {
+    run_when = local.k8s.cluster_name
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      kubectl delete daemonset --context='${module.eks.cluster_arn}' --namespace kube-system aws-node || true
+    EOT
+
+    interpreter = ["bash", "-c"]
+  }
+
+  depends_on = [
+    module.system_managed_node_group,
+    module.worker_managed_node_group
+  ]
+}

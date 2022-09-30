@@ -1,0 +1,6 @@
+tolerations:
+  - effect: NoSchedule
+    key: armada.io/batch
+    operator: Exists
+nodeSelector:
+  armada.io/batch: "true"

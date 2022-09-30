@@ -10,7 +10,9 @@ spec:
       resources:
         limits:
           nvidia.com/gpu: 1 # requesting 1 GPU
+  nodeSelector:
+    armada.io/batch: "true"
   tolerations:
-    - key: nvidia.com/gpu
+    - effect: NoSchedule
+      key: armada.io/batch
       operator: Exists
-      effect: NoSchedule

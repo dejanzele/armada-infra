@@ -82,7 +82,7 @@ variable "system_node_labels" {
 variable "system_nodes_instance_types" {
   type        = list(string)
   description = "Managed node group instance type"
-  default     = ["t3.large"]
+  default     = ["t3.medium"]
 }
 
 variable "system_nodes_max_size" {
@@ -100,7 +100,7 @@ variable "system_nodes_min_size" {
 variable "system_nodes_desired_size" {
   type        = number
   description = "System Node Group desired size"
-  default     = 4
+  default     = 3
 }
 
 variable "create_worker_nodes" {
@@ -124,7 +124,7 @@ variable "worker_node_labels" {
 variable "worker_nodes_instance_types" {
   type        = list(string)
   description = "Managed node group instance type"
-  default     = ["t3.large"]
+  default     = ["t3.medium"]
 }
 
 variable "worker_nodes_max_size" {
@@ -142,7 +142,7 @@ variable "worker_nodes_min_size" {
 variable "worker_nodes_desired_size" {
   type        = number
   description = "Worker Node Group desired size"
-  default     = 4
+  default     = 3
 }
 
 variable "flatcar_channel" {

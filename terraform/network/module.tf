@@ -20,12 +20,10 @@ module "vpc" {
   }
   public_subnet_tags = {
     Name                               = local.vpc.subnets.public_name
-    "kubernetes.io/cluster/dev-armada" = "shared"
     "kubernetes.io/role/elb"           = 1
   }
   private_subnet_tags = {
     Name                               = local.vpc.subnets.private_name
-    "kubernetes.io/cluster/dev-armada" = "shared"
     "kubernetes.io/role/internal-elb"  = 1
   }
   database_subnet_tags = {

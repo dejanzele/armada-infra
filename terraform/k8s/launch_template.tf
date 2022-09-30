@@ -30,7 +30,7 @@ resource "aws_launch_template" "launch_template" {
   # If you use a custom AMI, you need to supply via user-data, the bootstrap script as EKS DOESNT merge its managed user-data then
   # you can add more than the minimum code you see in the template, e.g. install SSM agent, see https://github.com/aws/containers-roadmap/issues/593#issuecomment-577181345
   # (optionally you can use https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/cloudinit_config to render the script, example: https://github.com/terraform-aws-modules/terraform-aws-eks/pull/997#issuecomment-705286151)
-  user_data = base64encode(templatefile("${path.module}/bootstrap.sh", { CLUSTER_NAME = local.k8s.cluster_name }))
+  user_data = base64encode(templatefile("${path.module}/bootstrap.sh", { CLUSTER_NAME = local.k8s.cluster_name, NODE_MAX_PODS = local.k8s.node_max_pods }))
 
   tag_specifications {
     resource_type = "instance"
@@ -39,26 +39,6 @@ resource "aws_launch_template" "launch_template" {
       Name      = local.k8s.cluster_name
       CustomTag = "Instance custom tag"
     }
-  }
-
-  tag_specifications {
-    resource_type = "volume"
-
-    tags = {
-      CustomTag = "Volume custom tag"
-    }
-  }
-
-  tag_specifications {
-    resource_type = "network-interface"
-
-    tags = {
-      CustomTag = "EKS example"
-    }
-  }
-
-  tags = {
-    CustomTag = "Launch template custom tag"
   }
 
   lifecycle {

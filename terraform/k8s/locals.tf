@@ -29,6 +29,7 @@ locals {
         "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
       ]
     }
+    node_max_pods = 100
     nvidia_device_plugin = {
       install = var.install_nvidia_device_plugin
     }
