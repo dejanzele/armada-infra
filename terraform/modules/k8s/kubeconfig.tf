@@ -6,7 +6,7 @@ resource "null_resource" "update_kubeconfig_with_cluster_info" {
   provisioner "local-exec" {
     command = <<-EOT
       aws eks \
-        --profile ${local.aws.profile} \
+        ${local.aws.profile != "" && local.aws.profile != null ? "--profile ${local.aws.profile}" : ""} \
         --region ${local.aws.region} \
         update-kubeconfig \
         --name ${local.k8s.cluster_name}

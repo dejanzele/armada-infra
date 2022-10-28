@@ -22,9 +22,16 @@ locals {
       namespace = "kube-system"
     }
     cert_manager = {
-      install   = var.install_cert_manager
-      email     = var.cert_manager_cluster_issuer_email
-      namespace = "cert-manager"
+      install        = var.install_cert_manager
+      email          = var.cert_manager_cluster_issuer_email
+      cluster_issuer = var.cert_manager_cluster_issuer
+      namespace      = "cert-manager"
+    }
+    grafana = {
+      create_ingress = var.grafana_create_ingress
+      init           = var.grafana_init
+      url            = "https://dashboard.${data.aws_route53_zone.this.name}"
+      auth           = "admin:prom-operator"
     }
     type    = "eks"
     cluster = var.k8s_cluster

@@ -19,12 +19,12 @@ module "vpc" {
     Name = local.vpc.name
   }
   public_subnet_tags = {
-    Name                               = local.vpc.subnets.public_name
-    "kubernetes.io/role/elb"           = 1
+    Name                     = local.vpc.subnets.public_name
+    "kubernetes.io/role/elb" = 1
   }
   private_subnet_tags = {
-    Name                               = local.vpc.subnets.private_name
-    "kubernetes.io/role/internal-elb"  = 1
+    Name                              = local.vpc.subnets.private_name
+    "kubernetes.io/role/internal-elb" = 1
   }
   database_subnet_tags = {
     Name = local.vpc.subnets.database_name

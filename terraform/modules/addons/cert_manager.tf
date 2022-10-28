@@ -30,6 +30,11 @@ resource "helm_release" "cert_manager_cluster_issuer" {
   }
 
   set {
+    name  = "clusterIssuer"
+    value = local.k8s.cert_manager.cluster_issuer
+  }
+
+  set {
     name  = "route53.region"
     value = local.aws.region
   }

@@ -7,7 +7,7 @@ resource "helm_release" "nvidia_device_plugin" {
   version          = "0.12.0"
   namespace        = "gpu-operator"
   create_namespace = true
-  values = [file("nvidia.values.yaml")]
+  values           = [file("nvidia.values.yaml")]
 
   depends_on = [null_resource.restart_coredns]
 }
