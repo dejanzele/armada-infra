@@ -1,5 +1,4 @@
 locals {
-  environment = var.environment
   aws = {
     region  = var.aws_region
     profile = var.aws_profile
@@ -55,6 +54,7 @@ locals {
       users    = var.aws_auth_users
       roles    = var.aws_auth_roles
     }
-    cluster_name = var.cluster_name
+    cluster_name    = var.cluster_name
+    additional_tags = var.additional_tags
   }
 }

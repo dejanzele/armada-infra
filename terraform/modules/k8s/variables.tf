@@ -1,8 +1,3 @@
-variable "environment" {
-  type        = string
-  description = "Environment (dev, qa, prod...)"
-}
-
 variable "aws_region" {
   type        = string
   description = "AWS Region"
@@ -166,4 +161,10 @@ variable "install_nvidia_device_plugin" {
   type        = bool
   description = "Toggle whether to install NVIDIA Device Plugin"
   default     = false
+}
+
+variable "additional_tags" {
+  type        = any
+  description = "Additional tags to apply to resources"
+  default     = {}
 }

@@ -31,9 +31,8 @@ module "eks" {
   aws_auth_roles    = local.k8s.auth.roles
   aws_auth_accounts = local.k8s.auth.accounts
 
-  tags = {
-    Cluster     = local.k8s.cluster_name
-    Environment = local.environment
-    Terraform   = "true"
-  }
+  tags = merge({
+    Cluster   = local.k8s.cluster_name
+    Terraform = "true"
+  }, local.k8s.additional_tags)
 }

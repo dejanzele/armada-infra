@@ -29,8 +29,8 @@ module "worker_managed_node_group" {
   taints = local.k8s.worker_nodes.taints
   labels = local.k8s.worker_nodes.labels
 
-  tags = {
+  tags = merge({
     Name      = "${local.k8s.cluster_name}-worker"
     CalicoCNI = local.k8s.calico.install ? null_resource.install_calico_cni[0].id : false
-  }
+  }, local.k8s.additional_tags)
 }

@@ -43,10 +43,10 @@ Terraform module.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | K8s cluster name | `string` | n/a | yes |
 | <a name="input_control_plane_subnet_ids"></a> [control\_plane\_subnet\_ids](#input\_control\_plane\_subnet\_ids) | List of VPC Subnet IDs in which to provision the k8s control plane | `list(string)` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment (dev, qa, prod...) | `string` | n/a | yes |
 | <a name="input_node_key_pair"></a> [node\_key\_pair](#input\_node\_key\_pair) | Key Pair to SSH into worker/system nodes | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID in which to provision the k8s cluster | `string` | n/a | yes |
 | <a name="input_worker_nodes_subnet_ids"></a> [worker\_nodes\_subnet\_ids](#input\_worker\_nodes\_subnet\_ids) | List of VPC Subnet IDs in which to provision the k8s worker nodes | `list(string)` | n/a | yes |
+| <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags to apply to resources | `any` | `{}` | no |
 | <a name="input_aws_additional_role"></a> [aws\_additional\_role](#input\_aws\_additional\_role) | Additional IAM role to add in aws-auth configmap | `string` | `""` | no |
 | <a name="input_aws_auth_accounts"></a> [aws\_auth\_accounts](#input\_aws\_auth\_accounts) | List of AWS accounts to grant access to the cluster | `list(string)` | `[]` | no |
 | <a name="input_aws_auth_roles"></a> [aws\_auth\_roles](#input\_aws\_auth\_roles) | List of IAM roles to grant access to the cluster | `list(object({ rolearn = string, username = string, groups = list(string) }))` | `[]` | no |
@@ -103,9 +103,11 @@ module "k8s" {
   cluster_name = "armada"
   eks_node_ami = "ami-0df25b667dc8fb64d"
   node_key_pair                = "dev-armada-debug"
-  create_worker_nodes = true
-  r53_zone = ""
-  environment  = "dev"
+
+  control_plane_subnet_ids = module.network.vpc_public_subnets_ids
+  environment              = ""
+  vpc_id                   = ""
+  worker_nodes_subnet_ids  = []
 }
 ```
 <!-- END_TF_DOCS -->
