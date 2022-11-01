@@ -1,4 +1,6 @@
 module "nginx-controller" {
+  count = var.install_nginx_controller ? 1 : 0
+
   source    = "terraform-iaac/nginx-controller/helm"
   namespace = "kube-system"
 

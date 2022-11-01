@@ -47,6 +47,12 @@ variable "install_cert_manager" {
   default     = true
 }
 
+variable "install_nginx_controller" {
+  type        = bool
+  description = "Toggle whether to install NGINX Controller Helm chart"
+  default     = true
+}
+
 variable "cert_manager_cluster_issuer" {
   type        = string
   description = "cert-manager ClusterIssuer object name"

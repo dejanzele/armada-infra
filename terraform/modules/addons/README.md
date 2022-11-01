@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+## Terraform module - addons
+
+This module installs Kubernetes tools which are prerequisites for Armada.
+
 ## Requirements
 
 | Name | Version |
@@ -7,15 +11,6 @@
 | <a name="requirement_grafana"></a> [grafana](#requirement\_grafana) | >= 1.30.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.7.1 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.15.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.37.0 |
-| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | >= 1.30.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.7.1 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.15.0 |
 
 ## Modules
 
@@ -59,9 +54,64 @@
 | <a name="input_grafana_init"></a> [grafana\_init](#input\_grafana\_init) | Toggle whether to init Grafana with Armada dashboard and datasource (grafana\_create\_ingress needs also to be true) | `bool` | `false` | no |
 | <a name="input_install_cert_manager"></a> [install\_cert\_manager](#input\_install\_cert\_manager) | Toggle whether to install Cert Manager Helm chart | `bool` | `true` | no |
 | <a name="input_install_metrics_server"></a> [install\_metrics\_server](#input\_install\_metrics\_server) | Toggle whether to install Metrics Server Helm chart | `bool` | `true` | no |
+| <a name="input_install_nginx_controller"></a> [install\_nginx\_controller](#input\_install\_nginx\_controller) | Toggle whether to install NGINX Controller Helm chart | `bool` | `true` | no |
 | <a name="input_install_prometheus"></a> [install\_prometheus](#input\_install\_prometheus) | Toggle whether to install Prometheus Operator Helm chart | `bool` | `true` | no |
 
 ## Outputs
 
 No outputs.
+
+## Example
+
+```hcl
+data "aws_eks_cluster" "this" {
+  name = module.k8s.cluster_name
+}
+
+data "aws_eks_cluster_auth" "aws_iam_authenticator" {
+  name = data.aws_eks_cluster.this.name
+}
+
+provider "aws" {}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.this.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.this.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+  }
+}
+
+
+module "network" {
+  source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/network"
+
+  vpc_cidr             = "10.0.0.0/14"
+  vpc_name             = "armada"
+  vpc_azs              = ["us-east-1a", "us-east-1b"]
+  vpc_public_subnets   = ["10.0.0.0/17", "10.0.128.0/17"]
+  vpc_private_subnets  = ["10.1.0.0/17", "10.1.128.0/17"]
+  vpc_database_subnets = ["10.2.0.0/17", "10.2.128.0/17"]
+}
+
+module "k8s" {
+  source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/k8s"
+
+  cluster_name  = "armada"
+  eks_node_ami  = "ami-0df25b667dc8fb64d"
+  node_key_pair = "dev-armada-debug"
+
+  vpc_id                   = module.network.vpc_id
+  control_plane_subnet_ids = module.network.vpc_public_subnets_ids
+  worker_nodes_subnet_ids  = module.network.vpc_private_subnets_ids
+
+  create_worker_nodes = true
+}
+```
 <!-- END_TF_DOCS -->

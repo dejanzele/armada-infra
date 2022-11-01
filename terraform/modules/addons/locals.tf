@@ -13,6 +13,9 @@ locals {
     metrics_server = {
       install = var.install_metrics_server
     }
+    nginx_controller = {
+      install = var.install_nginx_controller
+    }
     external_dns = {
       service_account = "external-dns"
       namespace       = "kube-system"
