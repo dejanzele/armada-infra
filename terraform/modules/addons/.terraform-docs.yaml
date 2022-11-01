@@ -19,7 +19,7 @@ content: |-
   ## Example
 
   ```hcl
-  {{ include "../../examples/k8s/main.tf" }}
+  {{ include "../../examples/addons/main.tf" }}
   ```
 
 settings:

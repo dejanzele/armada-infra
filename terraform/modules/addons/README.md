@@ -113,5 +113,19 @@ module "k8s" {
 
   create_worker_nodes = true
 }
+
+
+module "addons" {
+  source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/addons"
+
+  armada_domain                     = "dev.armadaproject.io"
+  k8s_cluster                       = module.k8s.cluster_name
+
+  install_cert_manager              = true
+  cert_manager_cluster_issuer_email = "service@armadaproject.io"
+  install_metrics_server            = true
+  install_prometheus                = true
+  install_nginx_controller          = true
+}
 ```
 <!-- END_TF_DOCS -->
