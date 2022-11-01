@@ -7,8 +7,8 @@ module "system_managed_node_group" {
   cluster_name = module.eks.cluster_id
   platform     = "linux"
 
-  vpc_id                            = data.aws_vpc.vpc.id
-  subnet_ids                        = data.aws_subnets.private.ids
+  vpc_id                            = local.vpc.id
+  subnet_ids                        = local.vpc.worker_nodes_subnet_ids
   cluster_primary_security_group_id = module.eks.cluster_primary_security_group_id
   vpc_security_group_ids = [
     module.eks.cluster_security_group_id,

@@ -1,11 +1,13 @@
 <!-- BEGIN_TF_DOCS -->
+## Terraform module - network
+
+This module creates a three-tier AWS VPC with public, private and database subnets.
+
 ## Requirements
 
-No requirements.
-
-## Providers
-
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.37.0 |
 
 ## Modules
 
@@ -21,17 +23,43 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `"armada"` | no |
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | `"us-east-1"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (dev, qa, prod...) | `string` | n/a | yes |
-| <a name="input_vpc_azs"></a> [vpc\_azs](#input\_vpc\_azs) | Availability Zones | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b"<br>]</pre> | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | VPC CIDR range | `string` | n/a | yes |
-| <a name="input_vpc_database_subnets"></a> [vpc\_database\_subnets](#input\_vpc\_database\_subnets) | VPC Database Subnet CIDR ranges | `list(string)` | `[]` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | VPC Name | `string` | n/a | yes |
+| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `""` | no |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | `"us-east-1"` | no |
+| <a name="input_vpc_azs"></a> [vpc\_azs](#input\_vpc\_azs) | Availability Zones | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b"<br>]</pre> | no |
+| <a name="input_vpc_database_subnets"></a> [vpc\_database\_subnets](#input\_vpc\_database\_subnets) | VPC Database Subnet CIDR ranges | `list(string)` | `[]` | no |
 | <a name="input_vpc_private_subnets"></a> [vpc\_private\_subnets](#input\_vpc\_private\_subnets) | VPC Private Subnet CIDR ranges | `list(string)` | `[]` | no |
 | <a name="input_vpc_public_subnets"></a> [vpc\_public\_subnets](#input\_vpc\_public\_subnets) | VPC Public Subnet CIDR ranges | `list(string)` | `[]` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_vpc_azs"></a> [vpc\_azs](#output\_vpc\_azs) | A list of availability zones specified as argument to this module |
+| <a name="output_vpc_database_subnets_cidr_blocks"></a> [vpc\_database\_subnets\_cidr\_blocks](#output\_vpc\_database\_subnets\_cidr\_blocks) | List of IDs of database subnets CIDR blocks |
+| <a name="output_vpc_database_subnets_ids"></a> [vpc\_database\_subnets\_ids](#output\_vpc\_database\_subnets\_ids) | List of IDs of database subnets |
+| <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | The name of the VPC specified as argument to this module |
+| <a name="output_vpc_private_subnets_cidr_blocks"></a> [vpc\_private\_subnets\_cidr\_blocks](#output\_vpc\_private\_subnets\_cidr\_blocks) | List of IDs of private subnets CIDR blocks |
+| <a name="output_vpc_private_subnets_ids"></a> [vpc\_private\_subnets\_ids](#output\_vpc\_private\_subnets\_ids) | List of IDs of private subnets |
+| <a name="output_vpc_public_subnets_cidr_blocks"></a> [vpc\_public\_subnets\_cidr\_blocks](#output\_vpc\_public\_subnets\_cidr\_blocks) | List of IDs of public subnets CIDR blocks |
+| <a name="output_vpc_public_subnets_ids"></a> [vpc\_public\_subnets\_ids](#output\_vpc\_public\_subnets\_ids) | List of IDs of public subnets |
+
+## Example
+
+```hcl
+provider "aws" {}
+
+module "network" {
+  source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/network"
+
+  vpc_cidr             = "10.0.0.0/16"
+  vpc_name             = "armada"
+  vpc_azs              = ["us-east-1a", "us-east-1b"]
+  vpc_public_subnets   = ["10.0.0.0/17", "10.0.128.0/17"]
+  vpc_private_subnets  = ["10.0.0.0/17", "10.0.128.0/17"]
+  vpc_database_subnets = ["10.0.0.0/17", "10.0.128.0/17"]
+}
+```
 <!-- END_TF_DOCS -->

@@ -12,7 +12,7 @@ variable "aws_region" {
 variable "aws_profile" {
   type        = string
   description = "AWS Profile"
-  default     = "armada"
+  default     = ""
 }
 
 variable "vpc_name" {

@@ -12,8 +12,25 @@ variable "aws_region" {
 variable "aws_profile" {
   type        = string
   description = "AWS Profile"
-  default     = "armada"
+  default     = ""
 }
+
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID in which to provision the k8s cluster"
+}
+
+variable "control_plane_subnet_ids" {
+  type        = list(string)
+  description = "List of VPC Subnet IDs in which to provision the k8s control plane"
+}
+
+variable "worker_nodes_subnet_ids" {
+  type        = list(string)
+  description = "List of VPC Subnet IDs in which to provision the k8s worker nodes"
+}
+
+// k8s
 
 variable "cluster_name" {
   type        = string
@@ -22,13 +39,8 @@ variable "cluster_name" {
 
 variable "eks_node_ami" {
   type        = string
-  description = "AMI for k8s nodes"
-}
-
-variable "k8s_version" {
-  type        = string
-  description = "K8s API version"
-  default     = "1.21"
+  description = "AMI for k8s nodes (default is for k8s v1.23 in us-east-1 region)"
+  default     = "ami-0df25b667dc8fb64d"
 }
 
 variable "aws_additional_role" {
@@ -53,12 +65,6 @@ variable "aws_auth_accounts" {
   type        = list(string)
   description = "List of AWS accounts to grant access to the cluster"
   default     = []
-}
-
-variable "r53_zone" {
-  type        = string
-  description = "Armada hosted zone"
-  default     = "dev.armadaproject.io"
 }
 
 variable "create_system_nodes" {
@@ -109,13 +115,13 @@ variable "create_worker_nodes" {
   default     = false
 }
 
-variable "worker_node_taints" {
+variable "worker_nodes_taints" {
   type        = list(object({ key = string, value = string, effect = string }))
   description = "Node taints"
   default     = []
 }
 
-variable "worker_node_labels" {
+variable "worker_nodes_labels" {
   type        = map(string)
   description = "Node labels"
   default     = {}
@@ -143,12 +149,6 @@ variable "worker_nodes_desired_size" {
   type        = number
   description = "Worker Node Group desired size"
   default     = 3
-}
-
-variable "flatcar_channel" {
-  type        = string
-  description = "Flatcar channel to deploy on instances"
-  default     = "stable"
 }
 
 variable "node_key_pair" {

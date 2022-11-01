@@ -1,0 +1,4 @@
+sort:
+  enabled: true
+  by: required
+

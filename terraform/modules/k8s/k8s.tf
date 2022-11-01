@@ -2,8 +2,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 18.0"
 
-  cluster_name    = local.k8s.cluster_name
-  cluster_version = local.k8s.api_version
+  cluster_name = local.k8s.cluster_name
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
@@ -14,8 +13,8 @@ module "eks" {
 
   iam_role_additional_policies = local.k8s.defaults.additional_iam_policies
 
-  vpc_id     = data.aws_vpc.vpc.id
-  subnet_ids = data.aws_subnets.public.ids
+  vpc_id     = local.vpc.id
+  subnet_ids = local.vpc.control_plane_subnet_ids
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
