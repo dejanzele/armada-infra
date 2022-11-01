@@ -44,6 +44,7 @@ Terraform module.
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | K8s cluster name | `string` | n/a | yes |
 | <a name="input_control_plane_subnet_ids"></a> [control\_plane\_subnet\_ids](#input\_control\_plane\_subnet\_ids) | List of VPC Subnet IDs in which to provision the k8s control plane | `list(string)` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (dev, qa, prod...) | `string` | n/a | yes |
+| <a name="input_node_key_pair"></a> [node\_key\_pair](#input\_node\_key\_pair) | Key Pair to SSH into worker/system nodes | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID in which to provision the k8s cluster | `string` | n/a | yes |
 | <a name="input_worker_nodes_subnet_ids"></a> [worker\_nodes\_subnet\_ids](#input\_worker\_nodes\_subnet\_ids) | List of VPC Subnet IDs in which to provision the k8s worker nodes | `list(string)` | n/a | yes |
 | <a name="input_aws_additional_role"></a> [aws\_additional\_role](#input\_aws\_additional\_role) | Additional IAM role to add in aws-auth configmap | `string` | `""` | no |
@@ -55,9 +56,8 @@ Terraform module.
 | <a name="input_create_system_nodes"></a> [create\_system\_nodes](#input\_create\_system\_nodes) | Toggle should create managed node group for system nodes | `bool` | `true` | no |
 | <a name="input_create_worker_nodes"></a> [create\_worker\_nodes](#input\_create\_worker\_nodes) | Toggle should create managed node group for worker nodes | `bool` | `false` | no |
 | <a name="input_eks_node_ami"></a> [eks\_node\_ami](#input\_eks\_node\_ami) | AMI for k8s nodes (default is for k8s v1.23 in us-east-1 region) | `string` | `"ami-0df25b667dc8fb64d"` | no |
-| <a name="input_install_calico_cni"></a> [install\_calico\_cni](#input\_install\_calico\_cni) | Toggle whether to install Calico CNI | `bool` | `true` | no |
+| <a name="input_install_calico_cni"></a> [install\_calico\_cni](#input\_install\_calico\_cni) | Toggle whether to install Calico CNI | `bool` | `false` | no |
 | <a name="input_install_nvidia_device_plugin"></a> [install\_nvidia\_device\_plugin](#input\_install\_nvidia\_device\_plugin) | Toggle whether to install NVIDIA Device Plugin | `bool` | `false` | no |
-| <a name="input_node_key_pair"></a> [node\_key\_pair](#input\_node\_key\_pair) | Key Pair to SSH into worker/system nodes | `string` | `null` | no |
 | <a name="input_system_node_labels"></a> [system\_node\_labels](#input\_system\_node\_labels) | System node labels | `map(string)` | `{}` | no |
 | <a name="input_system_node_taints"></a> [system\_node\_taints](#input\_system\_node\_taints) | System node taints | `list(object({ key = string, value = string, effect = string }))` | `[]` | no |
 | <a name="input_system_nodes_desired_size"></a> [system\_nodes\_desired\_size](#input\_system\_nodes\_desired\_size) | System Node Group desired size | `number` | `3` | no |

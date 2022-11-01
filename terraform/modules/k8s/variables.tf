@@ -154,13 +154,12 @@ variable "worker_nodes_desired_size" {
 variable "node_key_pair" {
   type        = string
   description = "Key Pair to SSH into worker/system nodes"
-  default     = null
 }
 
 variable "install_calico_cni" {
   type        = bool
   description = "Toggle whether to install Calico CNI"
-  default     = true
+  default     = false
 }
 
 variable "install_nvidia_device_plugin" {
