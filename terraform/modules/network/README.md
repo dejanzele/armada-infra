@@ -39,6 +39,7 @@ No resources.
 | <a name="output_vpc_azs"></a> [vpc\_azs](#output\_vpc\_azs) | A list of availability zones specified as argument to this module |
 | <a name="output_vpc_database_subnets_cidr_blocks"></a> [vpc\_database\_subnets\_cidr\_blocks](#output\_vpc\_database\_subnets\_cidr\_blocks) | List of IDs of database subnets CIDR blocks |
 | <a name="output_vpc_database_subnets_ids"></a> [vpc\_database\_subnets\_ids](#output\_vpc\_database\_subnets\_ids) | List of IDs of database subnets |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPC ID |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | The name of the VPC specified as argument to this module |
 | <a name="output_vpc_private_subnets_cidr_blocks"></a> [vpc\_private\_subnets\_cidr\_blocks](#output\_vpc\_private\_subnets\_cidr\_blocks) | List of IDs of private subnets CIDR blocks |
 | <a name="output_vpc_private_subnets_ids"></a> [vpc\_private\_subnets\_ids](#output\_vpc\_private\_subnets\_ids) | List of IDs of private subnets |
