@@ -1,8 +1,3 @@
-variable "environment" {
-  type        = string
-  description = "Environment (dev, qa, prod...)"
-}
-
 variable "aws_region" {
   type        = string
   description = "AWS Region"
@@ -15,14 +10,18 @@ variable "aws_profile" {
   default     = ""
 }
 
+// k8s
+
 variable "k8s_cluster" {
   type        = string
   description = "Name of K8s cluster"
 }
 
+// addons
+
 variable "armada_domain" {
   type        = string
-  description = "Domain for Armada"
+  description = "Domain under which to create DNS records for Armada components (server, ui, grafana) "
 }
 
 variable "cert_manager_cluster_issuer_email" {

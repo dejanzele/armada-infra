@@ -1,16 +1,21 @@
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.37.0 |
+| <a name="requirement_grafana"></a> [grafana](#requirement\_grafana) | >= 1.30.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.7.1 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.15.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | n/a |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.37.0 |
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | >= 1.30.0 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.7.1 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.15.0 |
 
 ## Modules
 
@@ -27,8 +32,8 @@ No requirements.
 | [aws_iam_policy.external_dns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.external_dns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.external_dns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [grafana_dashboard.metrics](https://registry.terraform.io/providers/hashicorp/grafana/latest/docs/resources/dashboard) | resource |
-| [grafana_data_source.cluster_0](https://registry.terraform.io/providers/hashicorp/grafana/latest/docs/resources/data_source) | resource |
+| [grafana_dashboard.metrics](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/dashboard) | resource |
+| [grafana_data_source.cluster_0](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/data_source) | resource |
 | [helm_release.cert_manager](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.cert_manager_cluster_issuer](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.external-dns](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
@@ -38,19 +43,16 @@ No requirements.
 | [kubernetes_namespace.armada](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
 | [kubernetes_namespace.gr_system](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
 | [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_eks_cluster.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
-| [aws_eks_cluster_auth.aws_iam_authenticator](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_armada_domain"></a> [armada\_domain](#input\_armada\_domain) | Domain for Armada | `string` | n/a | yes |
+| <a name="input_armada_domain"></a> [armada\_domain](#input\_armada\_domain) | Domain under which to create DNS records for Armada components (server, ui, grafana) | `string` | n/a | yes |
 | <a name="input_cert_manager_cluster_issuer_email"></a> [cert\_manager\_cluster\_issuer\_email](#input\_cert\_manager\_cluster\_issuer\_email) | Email which will receive notifications about certificates | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment (dev, qa, prod...) | `string` | n/a | yes |
 | <a name="input_k8s_cluster"></a> [k8s\_cluster](#input\_k8s\_cluster) | Name of K8s cluster | `string` | n/a | yes |
-| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `"armada"` | no |
+| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `""` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | `"us-east-1"` | no |
 | <a name="input_cert_manager_cluster_issuer"></a> [cert\_manager\_cluster\_issuer](#input\_cert\_manager\_cluster\_issuer) | cert-manager ClusterIssuer object name | `string` | `"letsencrypt-dev"` | no |
 | <a name="input_grafana_create_ingress"></a> [grafana\_create\_ingress](#input\_grafana\_create\_ingress) | Toggle whether to create NGINX ingress for Grafana | `bool` | `false` | no |

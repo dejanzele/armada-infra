@@ -51,14 +51,14 @@ module "cert_manager_irsa" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "3.6.0"
   create_role                   = true
-  role_name                     = "${local.environment}-armada-cert_manager-irsa"
+  role_name                     = "${local.k8s.cluster}-armada-cert_manager-irsa"
   provider_url                  = replace(data.aws_eks_cluster.this.identity[0].oidc[0].issuer, "https://", "")
   role_policy_arns              = [aws_iam_policy.cert_manager_policy.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:cert-manager:cert-manager"]
 }
 
 resource "aws_iam_policy" "cert_manager_policy" {
-  name        = "${local.environment}-armada-cert-manager-policy"
+  name        = "${local.k8s.cluster}-armada-cert-manager-policy"
   path        = "/"
   description = "Policy, which allows CertManager to create Route53 records"
 
