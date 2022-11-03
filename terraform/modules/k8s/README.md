@@ -85,7 +85,30 @@ Terraform module.
 ## Example
 
 ```hcl
+data "aws_eks_cluster" "this" {
+  name = module.k8s.cluster_name
+}
+
+data "aws_eks_cluster_auth" "aws_iam_authenticator" {
+  name = data.aws_eks_cluster.this.name
+}
+
 provider "aws" {}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.this.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.this.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+  }
+}
+
 
 module "network" {
   source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/network"
@@ -100,14 +123,16 @@ module "network" {
 
 module "k8s" {
   source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/k8s"
-  cluster_name = "armada"
-  eks_node_ami = "ami-0df25b667dc8fb64d"
-  node_key_pair                = "dev-armada-debug"
 
+  cluster_name  = "armada"
+  eks_node_ami  = "ami-0df25b667dc8fb64d"
+  node_key_pair = "dev-armada-debug"
+
+  vpc_id                   = module.network.vpc_id
   control_plane_subnet_ids = module.network.vpc_public_subnets_ids
-  environment              = ""
-  vpc_id                   = ""
-  worker_nodes_subnet_ids  = []
+  worker_nodes_subnet_ids  = module.network.vpc_private_subnets_ids
+
+  create_worker_nodes = true
 }
 ```
 <!-- END_TF_DOCS -->

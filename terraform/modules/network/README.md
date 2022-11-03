@@ -7,7 +7,7 @@ This module creates a three-tier AWS VPC with public, private and database subne
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.37.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.37.0 |
 
 ## Modules
 

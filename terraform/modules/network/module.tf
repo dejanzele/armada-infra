@@ -30,6 +30,6 @@ module "vpc" {
     Name = local.vpc.subnets.database_name
   }
   tags = {
-    Terraform   = "true"
+    Terraform = "true"
   }
 }

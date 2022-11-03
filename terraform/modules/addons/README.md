@@ -118,8 +118,8 @@ module "k8s" {
 module "addons" {
   source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/addons"
 
-  armada_domain                     = "dev.armadaproject.io"
-  k8s_cluster                       = module.k8s.cluster_name
+  armada_domain = "dev.armadaproject.io"
+  k8s_cluster   = module.k8s.cluster_name
 
   install_cert_manager              = true
   cert_manager_cluster_issuer_email = "service@armadaproject.io"

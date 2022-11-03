@@ -5,6 +5,9 @@
 # Local .terraform directories
 **/.terraform/*
 
+# deployments directory
+terraform/deployments
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
