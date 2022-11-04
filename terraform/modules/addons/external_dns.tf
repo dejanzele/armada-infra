@@ -74,7 +74,7 @@ resource "aws_iam_role_policy_attachment" "external_dns" {
 }
 
 resource "aws_iam_policy" "external_dns" {
-  name        = "external-dns-${var.environment}-armada"
+  name        = "external-dns-${local.k8s.cluster}-armada"
   description = "Policy using OIDC to give the EKS external dns ServiceAccount permissions to update Route53"
 
   policy = <<EOF
