@@ -9,8 +9,8 @@ In order to create an Armada cluster on AWS EKS from scratch, we will use the Te
 
 ## Dependencies
 
-* Terraform v1.3.3
-* An AWS account - provider.aws: version = ">= 4.37.0"
+* [Terraform >= v1.3.3](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+* An AWS account [AWS-CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ## Usage
 

@@ -1,4 +1,6 @@
-provider "aws" {}
+provider "aws" {
+  region = "us-east-1"
+}
 
 module "network" {
   source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/network"
