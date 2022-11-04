@@ -24,6 +24,12 @@ variable "armada_domain" {
   description = "Domain under which to create DNS records for Armada components (server, ui, grafana) "
 }
 
+variable "cert_manager_cluster_issuer" {
+  type        = string
+  description = "cert-manager ClusterIssuer object name"
+  default     = "letsencrypt-dev"
+}
+
 variable "cert_manager_cluster_issuer_email" {
   type        = string
   description = "Email which will receive notifications about certificates"
@@ -51,12 +57,6 @@ variable "install_nginx_controller" {
   type        = bool
   description = "Toggle whether to install NGINX Controller Helm chart"
   default     = true
-}
-
-variable "cert_manager_cluster_issuer" {
-  type        = string
-  description = "cert-manager ClusterIssuer object name"
-  default     = "letsencrypt-dev"
 }
 
 variable "grafana_create_ingress" {
