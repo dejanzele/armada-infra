@@ -21,7 +21,8 @@ variable "k8s_cluster" {
 
 variable "armada_domain" {
   type        = string
-  description = "Domain under which to create DNS records for Armada components (server, ui, grafana) "
+  description = "Domain under which to create DNS records for Armada components (server, ui, grafana)"
+  default     = ""
 }
 
 variable "cert_manager_cluster_issuer" {

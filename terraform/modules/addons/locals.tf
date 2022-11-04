@@ -32,7 +32,6 @@ locals {
     grafana = {
       create_ingress = var.grafana_create_ingress
       init           = var.grafana_init
-      url            = "https://dashboard.${data.aws_route53_zone.this.name}"
       auth           = "admin:prom-operator"
     }
     type    = "eks"

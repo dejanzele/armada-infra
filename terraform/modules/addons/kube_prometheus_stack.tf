@@ -10,7 +10,7 @@ resource "helm_release" "prometheus" {
 }
 
 resource "kubernetes_ingress_v1" "grafana_ingress" {
-  count = local.k8s.grafana.create_ingress ? 1 : 0
+  count = local.k8s.grafana.create_ingress && local.aws.r53.domain != "" ? 1 : 0
 
   metadata {
     annotations = {
@@ -28,7 +28,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
   spec {
     ingress_class_name = "nginx"
     rule {
-      host = "dashboard.${data.aws_route53_zone.this.name}"
+      host = "dashboard.${data.aws_route53_zone.this[0].name}"
       http {
         path {
           backend {
@@ -46,7 +46,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
     }
 
     tls {
-      hosts       = ["dashboard.${data.aws_route53_zone.this.name}"]
+      hosts       = ["dashboard.${data.aws_route53_zone.this[0].name}"]
       secret_name = "grafana-tls"
     }
   }
@@ -55,7 +55,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
 }
 
 provider "grafana" {
-  url  = local.k8s.grafana.url
+  url  = "https://dashboard.${local.aws.r53.domain}"
   auth = local.k8s.grafana.auth
 }
 
