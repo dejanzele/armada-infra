@@ -38,15 +38,16 @@ This module installs Kubernetes tools which are prerequisites for Armada.
 | [kubernetes_namespace.armada](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
 | [kubernetes_namespace.gr_system](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
 | [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_eks_cluster.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_armada_domain"></a> [armada\_domain](#input\_armada\_domain) | Domain under which to create DNS records for Armada components (server, ui, grafana) | `string` | n/a | yes |
 | <a name="input_cert_manager_cluster_issuer_email"></a> [cert\_manager\_cluster\_issuer\_email](#input\_cert\_manager\_cluster\_issuer\_email) | Email which will receive notifications about certificates | `string` | n/a | yes |
 | <a name="input_k8s_cluster"></a> [k8s\_cluster](#input\_k8s\_cluster) | Name of K8s cluster | `string` | n/a | yes |
+| <a name="input_armada_domain"></a> [armada\_domain](#input\_armada\_domain) | Domain under which to create DNS records for Armada components (server, ui, grafana) | `string` | `""` | no |
 | <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `""` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | `"us-east-1"` | no |
 | <a name="input_cert_manager_cluster_issuer"></a> [cert\_manager\_cluster\_issuer](#input\_cert\_manager\_cluster\_issuer) | cert-manager ClusterIssuer object name | `string` | `"letsencrypt-dev"` | no |
@@ -72,7 +73,9 @@ data "aws_eks_cluster_auth" "aws_iam_authenticator" {
   name = data.aws_eks_cluster.this.name
 }
 
-provider "aws" {}
+provider "aws" {
+  region = "us-east-1"
+}
 
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.this.endpoint
@@ -92,12 +95,12 @@ provider "helm" {
 module "network" {
   source = "git::https://github.com/dejanzele/armada-infra.git//terraform/modules/network"
 
-  vpc_cidr             = "10.0.0.0/14"
   vpc_name             = "armada"
   vpc_azs              = ["us-east-1a", "us-east-1b"]
-  vpc_public_subnets   = ["10.0.0.0/17", "10.0.128.0/17"]
-  vpc_private_subnets  = ["10.1.0.0/17", "10.1.128.0/17"]
-  vpc_database_subnets = ["10.2.0.0/17", "10.2.128.0/17"]
+  vpc_cidr             = "10.0.0.0/16"
+  vpc_public_subnets   = ["10.0.0.0/20", "10.0.16.0/20"]
+  vpc_private_subnets  = ["10.0.32.0/19", "10.0.64.0/19"]
+  vpc_database_subnets = ["10.0.96.0/24", "10.0.97.0/24"]
 }
 
 module "k8s" {
