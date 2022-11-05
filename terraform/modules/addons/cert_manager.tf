@@ -50,14 +50,14 @@ resource "helm_release" "cert_manager_cluster_issuer" {
 }
 
 module "cert_manager_irsa" {
-  count = local.k8s.cert_manager.install ? 1 : 0
+  count = local.k8s.cert_manager.install && local.aws.r53.domain != "" ? 1 : 0
 
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "3.6.0"
   create_role                   = true
   role_name                     = "${local.k8s.cluster}-armada-cert_manager-irsa"
   provider_url                  = replace(data.aws_eks_cluster.this.identity[0].oidc[0].issuer, "https://", "")
-  role_policy_arns              = [aws_iam_policy.cert_manager_policy.arn]
+  role_policy_arns              = [aws_iam_policy.cert_manager_policy[0].arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:cert-manager:cert-manager"]
 }
 
