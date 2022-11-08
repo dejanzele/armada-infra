@@ -3,9 +3,14 @@
 This project aims to provide a very straight-forward example of setting up an Armada cluster on AWS EKS.
 
 In order to create an Armada cluster on AWS EKS from scratch, we will use the Terraform modules provided in this repo:
-* *network* - create an AWS VPC
-* k8s - create a kubernetes cluster using AWS EKS
-* addons - install necessary kubernetes tools needed by Armada
+* *network* - creates an AWS VPC with configurable public, private and database subnets
+* *k8s* - creates a kubernetes cluster using AWS EKS
+* *addons* - installs necessary kubernetes tools needed by Armada
+
+All modules can be used independently, i.e. `k8s` module can be used with an already existing VPC, or `addons` module
+can be used with an already existing k8s cluster, but for simplicity, this guide will assume we are starting from scratch.
+
+In the `terraform/examples` folder are examples on how to use each terraform module and sample configurations.
 
 ## Dependencies
 
@@ -14,7 +19,7 @@ In order to create an Armada cluster on AWS EKS from scratch, we will use the Te
 
 ## Usage
 
-**1\. Ensure your AWS credentials are set up.**
+**Ensure your AWS credentials are set up.**
 
 This can be done using environment variables:
 
@@ -32,77 +37,37 @@ aws_access_key_id = your key id
 aws_secret_access_key = your secret key
 ```
 
-### network
+### Terraform workflow
 
-**2\. Review the Terraform plan.**
+A typical Terraform workflow consists of the following steps:
+* init - Initialize Terraform configuration (fetch modules, check access and permissions...)
+* plan - Terraform generates a plan of which resources will be provisioned
+* apply - Provision the resources from the Terraform plan
+* destroy - Destroy provisioned resources
 
-Execute the below command and ensure you are happy with the plan.
+Each example in the Terraform module provides a full flow for the module:
+* **network** example - applies the network terraform module.
+* **k8s** example - applies the network module, and then it applies the k8s module while referencing required info from the network module.
+* **addons** example - applies the network module, then the k8s module, and then it applies the addons module in the newly provisioned k8s cluster.
 
-``` bash
-$ cd terraform/examples/network
+### Quickstart
+
+The fastest way to create a fully functional Kubernetes cluster in which Armada can be installed immediately, follow this steps:
+```bash
+# go to the addons example
+$ cd terraform/examples/addons
+# init terraform configuration
+$ terraform init
+# review the terraform plan
 $ terraform plan
-```
-This project currently does the below deployments:
-
-- MongoDB cluster - M10
-- AWS Custom VPC, Internet Gateway, Route Tables, Subnets with Public and Private access
-- PrivateLink Connection at MongoDB Atlas
-- Create VPC Endpoint in AWS
-
-**3\. Configure the security group as required.**
-
-The security group in this configuration allows All Traffic access in Inbound and Outbound Rules.
-
-**4\. Execute the Terraform apply.**
-
-Now execute the plan to provision the AWS and Atlas resources.
-
-``` bash
+# apply the terraform plan
 $ terraform apply
 ```
 
-**5\. Destroy the resources.**
+#### Cleanup
 
-Once you are finished your testing, ensure you destroy the resources to avoid unnecessary charges.
-
-``` bash
+If you want to destroy all resources which were provisioned through Terraform, run the following command in the same folder where
+you have run the apply commands.
+```bash
 $ terraform destroy
-```
-
-**Important Point**
-
-To fetch the connection string follow the below steps:
-```
-output "atlasclusterstring" {
-    value = mongodbatlas_cluster.cluster-atlas.connection_strings
-}
-```
-**Outputs:**
-```
-atlasclusterstring = [
-  {
-    "aws_private_link" = {
-      "vpce-0ebb76559e8affc96" = "mongodb://pl-0-us-east-1.za3fb.mongodb.net:1024,pl-0-us-east-1.za3fb.mongodb.net:1025,pl-0-us-east-1.za3fb.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=atlas-d177ke-shard-0"
-    }
-    "aws_private_link_srv" = {
-      "vpce-0ebb76559e8affc96" = "mongodb+srv://cluster-atlas-pl-0.za3fb.mongodb.net"
-    }
-    "private" = ""
-    "private_srv" = ""
-    "standard" = "mongodb://cluster-atlas-shard-00-00.za3fb.mongodb.net:27017,cluster-atlas-shard-00-01.za3fb.mongodb.net:27017,cluster-atlas-shard-00-02.za3fb.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=atlas-d177ke-shard-0"
-    "standard_srv" = "mongodb+srv://cluster-atlas.za3fb.mongodb.net"
-  },
-]
-```
-
-To fetch a particular connection string, use the **lookup()** function of terraform as below:
-
-```
-output "plstring" {
-    value = lookup(mongodbatlas_cluster.cluster-atlas.connection_strings[0].aws_private_link_srv, aws_vpc_endpoint.ptfe_service.id)
-}
-```
-**Output:**
-```
-plstring = mongodb+srv://cluster-atlas-pl-0.za3fb.mongodb.net
 ```
