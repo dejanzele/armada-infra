@@ -14,8 +14,8 @@ In the `terraform/examples` folder are examples on how to use each terraform mod
 
 ## Dependencies
 
-* Terraform v1.3.3
-* An AWS account - provider.aws: version = ">= 4.37.0"
+* [Terraform v1.3.3](https://www.terraform.io/downloads)
+* An AWS account - `provider.aws: version = ">= 4.37.0"`
 
 ## Usage
 
