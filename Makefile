@@ -14,7 +14,7 @@ generate-k8s-addons-docs:
 	terraform-docs markdown table --output-file README.md --output-mode inject ./terraform/modules/addons
 
 .PHONY: terraform-format
-terraform-format: terraform-format-modules terraform-format-examples terraform-format-deployments
+terraform-format: terraform-format-modules terraform-format-examples
 
 .PHONY: terraform-format-modules
 terraform-format-modules:
@@ -28,8 +28,3 @@ terraform-format-examples:
 	terraform fmt ./terraform/examples/k8s
 	terraform fmt ./terraform/examples/addons
 
-.PHONY: terraform-format-deployments
-terraform-format-deployments:
-	terraform fmt ./terraform/deployments/gross/network
-	terraform fmt ./terraform/deployments/gross/k8s
-	terraform fmt ./terraform/deployments/gross/addons

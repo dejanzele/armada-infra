@@ -68,13 +68,13 @@ variable "create_system_nodes" {
   default     = true
 }
 
-variable "system_node_taints" {
+variable "system_nodes_taints" {
   type        = list(object({ key = string, value = string, effect = string }))
   description = "System node taints"
   default     = []
 }
 
-variable "system_node_labels" {
+variable "system_nodes_labels" {
   type        = map(string)
   description = "System node labels"
   default     = {}

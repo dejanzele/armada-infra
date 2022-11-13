@@ -58,12 +58,12 @@ Terraform module.
 | <a name="input_eks_node_ami"></a> [eks\_node\_ami](#input\_eks\_node\_ami) | AMI for k8s nodes (default is for k8s v1.23 in us-east-1 region) | `string` | `"ami-0df25b667dc8fb64d"` | no |
 | <a name="input_install_calico_cni"></a> [install\_calico\_cni](#input\_install\_calico\_cni) | Toggle whether to install Calico CNI | `bool` | `false` | no |
 | <a name="input_install_nvidia_device_plugin"></a> [install\_nvidia\_device\_plugin](#input\_install\_nvidia\_device\_plugin) | Toggle whether to install NVIDIA Device Plugin | `bool` | `false` | no |
-| <a name="input_system_node_labels"></a> [system\_node\_labels](#input\_system\_node\_labels) | System node labels | `map(string)` | `{}` | no |
-| <a name="input_system_node_taints"></a> [system\_node\_taints](#input\_system\_node\_taints) | System node taints | `list(object({ key = string, value = string, effect = string }))` | `[]` | no |
 | <a name="input_system_nodes_desired_size"></a> [system\_nodes\_desired\_size](#input\_system\_nodes\_desired\_size) | System Node Group desired size | `number` | `3` | no |
 | <a name="input_system_nodes_instance_types"></a> [system\_nodes\_instance\_types](#input\_system\_nodes\_instance\_types) | Managed node group instance type | `list(string)` | <pre>[<br>  "t3.medium"<br>]</pre> | no |
+| <a name="input_system_nodes_labels"></a> [system\_nodes\_labels](#input\_system\_nodes\_labels) | System node labels | `map(string)` | `{}` | no |
 | <a name="input_system_nodes_max_size"></a> [system\_nodes\_max\_size](#input\_system\_nodes\_max\_size) | System Node Group max size | `number` | `5` | no |
 | <a name="input_system_nodes_min_size"></a> [system\_nodes\_min\_size](#input\_system\_nodes\_min\_size) | System Node Group min size | `number` | `2` | no |
+| <a name="input_system_nodes_taints"></a> [system\_nodes\_taints](#input\_system\_nodes\_taints) | System node taints | `list(object({ key = string, value = string, effect = string }))` | `[]` | no |
 | <a name="input_worker_nodes_desired_size"></a> [worker\_nodes\_desired\_size](#input\_worker\_nodes\_desired\_size) | Worker Node Group desired size | `number` | `3` | no |
 | <a name="input_worker_nodes_instance_types"></a> [worker\_nodes\_instance\_types](#input\_worker\_nodes\_instance\_types) | Managed node group instance type | `list(string)` | <pre>[<br>  "t3.medium"<br>]</pre> | no |
 | <a name="input_worker_nodes_labels"></a> [worker\_nodes\_labels](#input\_worker\_nodes\_labels) | Node labels | `map(string)` | `{}` | no |

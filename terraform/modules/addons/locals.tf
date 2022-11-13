@@ -32,7 +32,7 @@ locals {
     grafana = {
       create_ingress = var.grafana_create_ingress
       init           = var.grafana_init
-      auth           = "admin:prom-operator"
+      auth           = var.grafana_auth
     }
     type    = "eks"
     cluster = var.k8s_cluster

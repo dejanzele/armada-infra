@@ -34,6 +34,7 @@ variable "cert_manager_cluster_issuer" {
 variable "cert_manager_cluster_issuer_email" {
   type        = string
   description = "Email which will receive notifications about certificates"
+  default     = ""
 }
 
 variable "install_prometheus" {
@@ -70,4 +71,10 @@ variable "grafana_init" {
   type        = bool
   description = "Toggle whether to init Grafana with Armada dashboard and datasource (grafana_create_ingress needs also to be true)"
   default     = false
+}
+
+variable "grafana_auth" {
+  type        = string
+  description = "Grafana credentials (format '<username>:<password>')"
+  default     = "admin:prom-operator"
 }

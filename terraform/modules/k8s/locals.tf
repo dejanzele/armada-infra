@@ -33,8 +33,8 @@ locals {
     key_pair = var.node_key_pair
     system_nodes = {
       create         = var.create_system_nodes
-      taints         = var.system_node_taints
-      labels         = var.system_node_labels
+      taints         = var.system_nodes_taints
+      labels         = var.system_nodes_labels
       instance_types = var.system_nodes_instance_types
       min_size       = var.system_nodes_min_size
       max_size       = var.system_nodes_max_size

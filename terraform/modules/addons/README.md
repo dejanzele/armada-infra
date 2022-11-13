@@ -45,12 +45,13 @@ This module installs Kubernetes tools which are prerequisites for Armada.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cert_manager_cluster_issuer_email"></a> [cert\_manager\_cluster\_issuer\_email](#input\_cert\_manager\_cluster\_issuer\_email) | Email which will receive notifications about certificates | `string` | n/a | yes |
 | <a name="input_k8s_cluster"></a> [k8s\_cluster](#input\_k8s\_cluster) | Name of K8s cluster | `string` | n/a | yes |
 | <a name="input_armada_domain"></a> [armada\_domain](#input\_armada\_domain) | Domain under which to create DNS records for Armada components (server, ui, grafana) | `string` | `""` | no |
 | <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | AWS Profile | `string` | `""` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | `"us-east-1"` | no |
 | <a name="input_cert_manager_cluster_issuer"></a> [cert\_manager\_cluster\_issuer](#input\_cert\_manager\_cluster\_issuer) | cert-manager ClusterIssuer object name | `string` | `"letsencrypt-dev"` | no |
+| <a name="input_cert_manager_cluster_issuer_email"></a> [cert\_manager\_cluster\_issuer\_email](#input\_cert\_manager\_cluster\_issuer\_email) | Email which will receive notifications about certificates | `string` | `""` | no |
+| <a name="input_grafana_auth"></a> [grafana\_auth](#input\_grafana\_auth) | Grafana credentials (format '<username>:<password>') | `string` | `"admin:prom-operator"` | no |
 | <a name="input_grafana_create_ingress"></a> [grafana\_create\_ingress](#input\_grafana\_create\_ingress) | Toggle whether to create NGINX ingress for Grafana | `bool` | `false` | no |
 | <a name="input_grafana_init"></a> [grafana\_init](#input\_grafana\_init) | Toggle whether to init Grafana with Armada dashboard and datasource (grafana\_create\_ingress needs also to be true) | `bool` | `false` | no |
 | <a name="input_install_cert_manager"></a> [install\_cert\_manager](#input\_install\_cert\_manager) | Toggle whether to install Cert Manager Helm chart | `bool` | `true` | no |

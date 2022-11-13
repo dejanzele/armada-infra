@@ -54,11 +54,6 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
   depends_on = [helm_release.prometheus]
 }
 
-provider "grafana" {
-  url  = "https://dashboard.${local.aws.r53.domain}"
-  auth = local.k8s.grafana.auth
-}
-
 resource "grafana_data_source" "cluster_0" {
   count = local.k8s.grafana.create_ingress && local.k8s.grafana.init ? 1 : 0
   type  = "prometheus"

@@ -10,7 +10,7 @@ resource "helm_release" "cert_manager" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = local.k8s.cert_manager.install && local.aws.r53.domain != "" ? module.cert_manager_irsa.this_iam_role_arn : ""
+    value = (local.k8s.cert_manager.install && local.aws.r53.domain != "") ? module.cert_manager_irsa[0].this_iam_role_arn : ""
   }
 
   set {
