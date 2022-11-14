@@ -19,7 +19,8 @@ resource "helm_release" "ebs_csi_driver" {
   chart      = "aws-ebs-csi-driver"
 
   set {
-    name  = "controller.serviceAccount.name.eks\\.amazonaws\\.com/role-arn"
+    name  = "controller.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    type  = "string"
     value = module.ebs_csi_eks_role.iam_role_arn
   }
 }
